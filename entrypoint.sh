@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 set -e
 
 if [ -z "$CHART_FOLDER" ]; then
@@ -39,8 +40,12 @@ helm version -c
 
 helm inspect chart .
 
-helm package .
+if [[ $CHARMUSEUM_REPO_NAME ]]; then
+  helm repo add ${CHARMUSEUM_REPO_NAME} ${CHARTMUSEUM_URL} --username ${CHARTMUSEUM_USER} --password ${CHARTMUSEUM_PASSWORD}
+fi
 
 helm dependency update .
+
+helm package .
 
 helm push ${CHART_FOLDER}-* ${CHARTMUSEUM_URL} -u ${CHARTMUSEUM_USER} -p ${CHARTMUSEUM_PASSWORD} ${FORCE}
