@@ -40,9 +40,7 @@ helm version -c
 
 helm inspect chart .
 
-if [[ $CHARMUSEUM_REPO_NAME ]]; then
-  helm repo add ${CHARMUSEUM_REPO_NAME} ${CHARTMUSEUM_URL} --username ${CHARTMUSEUM_USER} --password ${CHARTMUSEUM_PASSWORD}
-fi
+helm repo add ${CHARMUSEUM_REPO_NAME} ${CHARTMUSEUM_URL} --username ${CHARTMUSEUM_USER} --password ${CHARTMUSEUM_PASSWORD}
 
 helm dependency update .
 
